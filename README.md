@@ -2,7 +2,7 @@
 浦新金服--七乐宝手机端
 
 线上浏览地址：
-
+http://htmlpreview.github.io/?https://blingblingwebopen.github.io/puxin/
 
 ![图片说明1](https://github.com/blingblingWebOpen/puxin/blob/master/images/redome2.png)
 ![图片说明1](https://github.com/blingblingWebOpen/puxin/blob/master/images/redome3.png)
