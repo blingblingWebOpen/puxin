@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>持仓列表</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+				
+			<div class="xunjialis">
+				<!-- 持仓列表 -->
+				<div class="lisdiv">
+					<div class="chicli">
+						<div class="chictime">
+							2017/10/30   16:45
+						</div>
+						<div class="clist">
+							<div class="clist01"><b class="lisname">浦发银行<i>666666</i></b><input type="button" class="bluebtn" value="卖出"></div>
+							<div class="clist02">
+								<div class="clist-01">
+									<span class="listext">规模：<i class="">10000</i></span>
+									<span class="listext">费率：<i class="">5.23%</i></span>
+									<span class="listext">期限：<i class="">1个星期</i></span>
+								</div>
+								<div class="clist-02">
+									<span class="listext">买入价：<i class="redfont">10000</i></span>
+									<span class="listext">到期日：<i class="">-</i></span>									
+								</div>
+							</div>							
+						</div>
+						<div class="chictime">
+							2017/10/30   16:45
+						</div>
+						<div class="clist">
+							<div class="clist01"><b class="lisname">浦发银行<i>666666</i></b><input type="button" class="bluebtn"  value="卖出"></div>
+							<div class="clist02">
+								<div class="clist-01">
+									<span class="listext">规模：<i class="">10000</i></span>
+									<span class="listext">费率：<i class="">5.23%</i></span>
+									<span class="listext">期限：<i class="">1个星期</i></span>
+								</div>
+								<div class="clist-02">
+									<span class="listext">买入价：<i class="redfont">10000</i></span>
+									<span class="listext">到期日：<i class="">-</i></span>									
+								</div>
+							</div>
+							
+						</div>
+
+						<div class="chictime">
+							2017/10/30   16:45
+						</div>
+						<div class="clist">
+							<div class="clist01"><b class="lisname">浦发银行<i>666666</i></b><input type="button" class="bluebtn" value="卖出"></div>
+							<div class="clist02">
+								<div class="clist-01">
+									<span class="listext">规模：<i class="">10000</i></span>
+									<span class="listext">费率：<i class="">5.23%</i></span>
+									<span class="listext">期限：<i class="">1个星期</i></span>
+								</div>
+								<div class="clist-02">
+									<span class="listext">买入价：<i class="redfont">10000</i></span>
+									<span class="listext">到期日：<i class="">-</i></span>									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
+
+		<script type="text/javascript">
+		// 持仓同买入列表
+					//点击卖出
+					var omcbtn =  $('.bluebtn');
+					for (var i =0; i<omcbtn.length; i++) {
+						omcbtn[i].onclick = function(){
+							//ajax向后台请求
+							$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/changeSellout',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'userId': '1',//用户id
+                			'capitalFlowId':'8'//单号
+                		}, 
+                		success:function(res){                			
+                			if(res.status==200){
+                				console.log('成功');
+                				$(this).attr('disabled',"true");//添加disabled属性
+                			
+                			}else{
+                				console.log('系统异常');
+                			}
+	                		}
+						});
+							
+						}
+					}
+					// 列表加载
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/getPosition',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'userId': '2',//用户id
+                			'type_buy_three':'10'//持仓
+                		}, 
+                		success:function(res){
+                			console.log(res.capitalFlow);
+                			var olist = res.position;//列表
+                			var listdiv = {};
+                			var reslist = '';
+                			var operating;//类型
+                			if(res.status==200){
+                				console.log('成功');
+                				for (var i = olist.length - 1; i >= 0; i--) {
+                					
+                					if(olist[i].operatingType==0){
+                						operating = '提现';
+                					}else if(olist[i].operatingType==10){
+                						operating = '持仓';
+                					}else if(olist[i].operatingType==20){
+                						operating = '买入';
+                					}else if(olist[i].operatingType==21){
+                						operating = '买入中';
+                					}else if(olist[i].operatingType==30){
+                						operating = '卖出';
+                					}else if(olist[i].operatingType==31){
+                						operating = '卖出中';
+                					}
+
+                					reslist += '<div class="chictime">'+olist[i].operatingTime+'</div><div class="clist"><div class="clist01"><b class="lisname">'+olist[i].shareName+'<i>'+olist[i].shareCode+'</i></b><span class="bluebtn">撤销</span></div><div class="clist02"><div class="clist-01"><span class="listext">规模：<i class="">'+olist[i].scale+'</i></span><span class="listext">费率：<i class="">'+olist[i].rate+'</i></span><span class="listext">期限：<i class="">'+olist[i].term+'</i></span></div><div class="clist-02"><span class="listext">买入价：<i class="redfont">10000</i></span><span class="listext">到期日：<i class="">-</i>'+olist[i].expirationDate+'</span></div></div></div>';
+
+                				}
+                				// 遍历出来的加入
+                				$('.chicli').append(reslist);
+
+
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					});
+			</script>
+	</body>
+</html>

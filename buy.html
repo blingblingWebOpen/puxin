@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>买入</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+	<!-- 买入 -->
+				<div class="maidiv">
+					<div class="maili">						
+						<div class="mailide">
+							<div class="maili01"><b class="lisname">浦发银行</b><span class="listext">标的代码：600000</span></div>
+							<div class="maili02">
+								<span class="listext">期限：<i class="bluefont">1个星期</i></span>
+								<span class="listext">费率：<i class="redfont">5.23%</i></span>
+							</div>
+						</div>
+						<div class="mailide02">
+							<label>履约能力：</label><input id="lvy" type="text" name="" placeholder="请输入履约规模，不小于1万"><i class="chacha"></i>
+						</div>
+					</div>
+					<a class="redbtn mairubtn">买入</a>
+					<div class="tongy">
+						<label class="xieyi"><input id="gou" type="checkbox" name="xieyi"><i></i>点击买入即视为同意<a class="bluefont" href="xieyi2.html">《期乐宝业务合作协议》</a></label>
+					</div>
+					<div class="tips01">
+						<p>1,每个交易日13:30-16:00为建仓时间，不接受委托。</p>
+						<p>2,买入价格为该标的14:00-15:00的均价。</p>
+						<p>3，大额购买需走线下流程，请致电客服021-60523490</p>
+					</div>
+				</div>
+		
+<script type="text/javascript">
+// 清空输入框
+	$('.chacha').click(function(){
+					$('#lvy').val('');
+				});
+	// 买入
+	$('.mairubtn').click(function(){
+		var ogou = $('#gou').is(":checked");//协议是否同意
+		if(ogou){
+			$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/changeBuy',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'userId': '1',//用户id
+                			'inquiryId':'1',//询价id
+                			'scale':'10001',//规模
+                			'buyType':''//类型
+                		}, 
+                		success:function(res){
+                			console.log(res);
+                			if(res.status==200){                				     				
+                				console.log('成功');                    				
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					})
+				}else{
+					alert('请详细查看合作协议');
+				}
+				});
+		
+
+</script>
+				
+	</body>
+</html>

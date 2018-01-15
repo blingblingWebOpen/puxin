@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>交易</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<script scr="js/common.js"></script>
+	</head>
+	<body class="paddbottom">
+		<!-- 操作列表 -->
+		<div class="listdiv">
+			<div class="listli"><a href="xunjia.html"><img src="images/ico01.jpg" /><span>询价</span></a></div>
+			<div class="listli"><a href="xunjia.html"><img src="images/ico02.jpg" /><span>买入</span></a></div>
+			<div class="listli"><a href="chicanglist.html"><img src="images/ico03.jpg" /><span>卖出</span></a></div>
+			<div class="listli"><a href="chicanglist.html"><img src="images/ico04.jpg" /><span>持仓</span></a></div>
+			<div class="listli"><a href="buylist.html"><img src="images/ico05.jpg" /><span>买入撤单</span></a></div>
+			<div class="listli"><a href="salelist.html"><img src="images/ico06.jpg" /><span>卖出撤单</span></a></div>
+			<div class="listli"><a href="buylist.html"><img src="images/ico07.jpg" /><span>买入列表</span></a></div>
+			<div class="listli"><a href="salelist.html"><img src="images/ico08.jpg" /><span>卖出列表</span></a></div>
+		</div>
+
+		
+		
+		
+		<div id="footernav">
+			<a class="jinc onthis" href="index.html">				
+				<i class="footerimg1"></i>
+				<span class="red">交易</span>
+			</a>
+			<a class="jinc" href="my.html">				
+				<i class="footerimg2"></i>
+				<span>我的账户</span>
+			</a>
+		</div>
+		
+		<script type="text/javascript">
+		window.onload=function(){
+				$(".jinc").click(function(){
+					$(this).addClass('onthis').siblings('a').removeClass('onthis');					
+				})
+			}
+		</script>
+		
+	</body>
+</html>

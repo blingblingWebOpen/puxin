@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>资金流水</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+		
+			<!-- 资金流水 -->
+			<div class="zijinlist">
+				<div class="zijinli">
+					<div class="zijintime">2017-10-6 15:21</div>
+					<div class="zijinde">
+						<div class="zijin01">
+							<span class="listext">类型：<i class="">提现</i></span>
+							<span class="listext">余额：<i class="">88.00</i></span>
+							<span class="listext">收入：<i class="">1000.00</i></span>
+							<span class="listext">支出：<i class="">5.23%</i></span>
+						</div>
+						<div class="zijin02">
+							<span class="listext"><b>备注：</b><i class="">噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的</i></span>
+						</div>
+					</div>
+				</div>
+				<div class="zijinli">
+					<div class="zijintime">2017-10-6 15:21</div>
+					<div class="zijinde">
+						<div class="zijin01">
+							<span class="listext">类型：<i class="">提现</i></span>
+							<span class="listext">余额：<i class="">88.00</i></span>
+							<span class="listext">收入：<i class="">1000.00</i></span>
+							<span class="listext">支出：<i class="">5.23%</i></span>
+						</div>
+						<div class="zijin02">
+							<span class="listext"><b>备注：</b><i class="">噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的噢噢噢噢好的</i></span>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
+
+			<script type="text/javascript">
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/my/getCapitalFlow',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1'
+                		}, 
+                		success:function(res){
+                			console.log(res.capitalFlow);
+                			var olist = res.capitalFlow;
+                			var listdiv = {};
+                			var reslist = '';
+                			var operating;//类型
+                			if(res.status==200){
+                				console.log('成功');
+                				for (var i = olist.length - 1; i >= 0; i--) {
+                					
+                					if(olist[i].operatingType==0){
+                						operating = '提现';
+                					}else if(olist[i].operatingType==10){
+                						operating = '持仓';
+                					}else if(olist[i].operatingType==20){
+                						operating = '买入';
+                					}else if(olist[i].operatingType==21){
+                						operating = '买入中';
+                					}else if(olist[i].operatingType==30){
+                						operating = '卖出';
+                					}else if(olist[i].operatingType==31){
+                						operating = '卖出中';
+                					}
+
+                					reslist += '<div class="zijinli"><div class="zijintime">'+olist[i].operatingTime+'</div><div class="zijinde"><div class="zijin01"><span class="listext">类型：<i class="">'+operating+'</i></span><span class="listext">余额：<i class="">'+ olist[i].balance+'</i></span><span class="listext">收入：<i class="">'+olist[i].income+'</i></span>span class="listext">支出：<i class="">'+olist[i].expenditure+'%</i></span></div><div class="zijin02"><span class="listext"><b>备注：</b><i class="">'+olist[i].remarks+'</i></span></div></div></div>';
+
+                				}
+                				// 遍历出来的加入
+                				$('.zijinlist').append(reslist);
+
+
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					});
+			</script>
+	</body>
+</html>

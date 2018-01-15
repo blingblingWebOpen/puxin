@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>询价</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+		<div class="xunjiadiv">
+				<div class="userdiv">
+					<p class="userp3"><label class="bdlabel">标的代码</label><input id="bdinp" class="bdinp" type="text" name="" placeholder="请输入标的代码"> <i class="chacha"></i></p>
+					<p class="userp3"><label class="bdlabel">标的名称</label><input id = "bdname" type="text" name="" disabled="disabled" placeholder="" value=""> </p>
+					<div class="userp3">
+					<div class="timediv"><label class="bdtime"><input type="radio" name="bdtime" checked="checked" value="1个星期"><i></i>1个星期</label></div>
+					<div class="timediv"><label class="bdtime"><input type="radio" name="bdtime" value="2个星期"><i></i>2个星期</label></div>
+					<div class="timediv"><label class="bdtime"><input type="radio" name="bdtime" 
+					value="1个月" ><i></i>1个月</label></div>
+					 </div>
+				</div>
+
+			</div>
+			<a class="bluebtn xunjiabtn">询价</a>
+			
+			<div class="xunjialis">
+				<h6 class="xunjtitle">历史记录</h6>
+				<!-- 历史记录列表 -->
+				<div class="lisdiv">
+					<div class="lisli">
+						<div class="lislitime">
+							2017/10/30   16:45
+						</div>
+						<div class="lislide">
+							<div class="lisli01"><b class="lisname">浦发银行</b><span class="listext">标的代码：600000</span></div>
+							<div class="lisli02">
+								<span class="listext">期限：<i class="bluefont">1个星期</i></span>
+								<span class="listext">费率：<i class="redfont">5.23%</i></span>
+							</div>
+							<div class="lisli03"><a href="buy.html" class="redbtn">买入</a></div>
+						</div>
+					</div>
+					<div class="lisli">
+						<div class="lislitime">
+							2017/10/30   16:45
+						</div>
+						<div class="lislide">
+							<div class="lisli01"><b class="lisname">浦发银行</b><span class="listext">标的代码：600000</span></div>
+							<div class="lisli02">
+								<span class="listext">期限：<i class="bluefont">1个星期</i></span>
+								<span class="listext">费率：<i class="redfont">5.23%</i></span>
+							</div>
+							<div class="lisli03"><a href="buy.html" class="redbtn">买入</a></div>
+						</div>
+					</div>
+					
+				</div>
+			</div> 
+			<script type="text/javascript">
+				$('.chacha').click(function(){
+					$('#bdinp').val('');
+					$('#bdname').val('');
+				});
+				// 历史记录
+				$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/getInquiry',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1'
+                			// 'shareCode':osharecode,
+                			// 'term':oterm
+                		}, 
+                		success:function(res){
+                			console.log(res);
+                			console.log(res.inquiry); 
+                			var olist = res.inquiry;//列表集合
+                			var olistjia = '';//字符串拼接       		
+                			if(res.status==200){
+                				for (var i = olist.length - 1; i >= 0; i--) {
+                					olistjia += '<div class="lisli">'+
+                					'<div class="lislitime">'+olist[i].queryTime+'</div><div class="lislide"><div class="lisli01"><b class="lisname">'+olist[i].shareName+'</b><span class="listext">标的代码：'+olist[i].shareCode+'</span></div><div class="lisli02"><span class="listext">期限：<i class="bluefont">'+olist[i].term+'</i></span><span class="listext">费率：<i class="redfont">'+olist[i].rate+'%</i></span></div><div class="lisli03"><a href="buy.html" class="redbtn">买入</a></div></div></div>';
+                				}    
+                				$('.lisdiv').append(olistjia);            				
+                				console.log('成功');      			
+                				
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					});
+				// 获取名称
+				$('#bdinp').blur(function(){
+					var osharecode =parseInt($(this).val());	
+					var oterm = $('input[name=bdtime][checked]').val(); //被选中的日期	
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/getInquiry',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1',
+                			'shareCode':osharecode,
+                			'term':oterm
+                		}, 
+                		success:function(res){
+                			console.log(res);
+                			console.log(res.inquiry);                		
+                			if(res.status==200){
+                				var obdname =res.inquiry[0].shareName;
+                				console.log(obdname);
+                				$('#bdname').val(obdname);
+                				console.log('成功');      			
+                				
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					});
+				});
+
+				// 询价
+				$('.xunjiabtn').click(function(){
+					var osharecode =parseInt($(this).val());//标的代码	
+					var oterm = $('input[name=bdtime][checked]').val(); //被选中的日期
+					if(osharecode.lenght!=0){
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/tranding/getInquiry',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1',
+                			'shareCode':osharecode,
+                			'term':oterm
+                		}, 
+                		success:function(res){
+                			console.log(res);
+                			console.log(res.inquiry);                		
+                			if(res.status==200){
+                				var obdname = res.inquiry.shareName;
+                				console.log(obdname);
+                				$('#bdname').html(obdname);
+                				console.log('成功');      			
+                				
+                			}else{
+                				console.log('系统异常');
+                			}
+                		}
+					});
+					}else{
+						if(osharecode.lenght==0){
+							alert('请输入标的代码');
+						}
+					}
+				})
+
+					
+			</script>
+	</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>浦新金服</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="">
+		<!-- 登录部分 -->
+			<div class="logindiv">
+				<img class="userpic" src="">
+				<div class="userdiv">
+				<form name="registerform" action="" onsubmit="register()" method="get">
+					<p class="userp"><label>账号</label><input type="text" id="phone" name="" placeholder="请输入账号"> </p>
+					<p class="userp"><label>密码</label><input type="password" id="mima" name="" placeholder="请输入密码"> </p>
+
+					<input class="bluebtn" type="submit" value="立即登录"/>
+					<p class="usercaoz"><a class="bluefont">忘记密码</a><a class="bluefont" href="register.html">立即注册</a></p>
+				</form>
+				</div>
+
+				<div class="kefu">客服电话：021-60523490</div>
+
+			</div>
+
+
+		<script type="text/javascript">
+				// 提交表单
+				function register(){
+					var ophone = $('#phone').val();
+					var omima = $('#mima').val();
+					var regu = /^[1][0-9][0-9]{9}$/; /*判断手机格式是否正确*/	
+					var re = new RegExp(regu);	
+						console.log('123');
+
+					// 验证为空
+					if (ophone.length!=0 && omima.length!=0 && re.test(ophone)) {
+						console.log('456');
+
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption//front/login/login',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'tel':ophone,
+                			'oldpassword':omima,
+                		},
+                		success:function(res){
+                			if(res.status==200){
+                				console.log('提交成功 ');
+                			}else if (res.status==203){
+                				console.log('密码错误');
+                			}else if(res.status==202){
+                				console.log('用户不存在');
+                			}else if(res.status==201){
+                				console.log('系统异常');
+                			}
+
+                		}
+					});
+					}else{
+						if(ophone.length==0){
+						alert('请输入手机号');
+						return
+						}
+						if(re.test(ophone)==false){
+							alert("请输入正确手机号");
+							return
+						}
+						if(omima.length==0){
+							alert('请输入密码');
+							return
+						}	
+					}
+
+				}
+			</script>
+		<script type="text/javascript">
+		window.onload=function(){
+				$(".jinc").click(function(){
+					$(this).addClass('onthis').siblings('a').removeClass('onthis');					
+				})
+			}
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>我的</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+			
+			<!-- 我的 -->
+			<div class="mymoney">
+				<h4>账户余额</h4>
+				<h6 class="zhnum">10000.00</h6>
+			</div>
+			<div class="myaccount">账号:</div>
+			<div class="mylist">
+				<a class="myli" href="recharge.html"><span>资金充值</span><i class="rightj"></i></a>
+				<a class="myli" href="tixian.html"><span>资金提现</span><i class="rightj"></i></a>
+				<a class="myli" href="capitalflow.html"><span>资金流水</span><i class="rightj"></i></a>
+				<a class="myli" href="forget.html"><span>更改密码</span><i class="rightj"></i></a>
+			</div>
+			<div class="tuichu">退出登录</div>
+
+		<div id="footernav">
+			<a class="jinc" href="index.html">				
+				<i class="footerimg1"></i>
+				<span class="red">交易</span>
+			</a>
+			<a class="jinc onthis" href="my.html">				
+				<i class="footerimg2"></i>
+				<span>我的账户</span>
+			</a>
+		</div>
+<script type="text/javascript">
+
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/my/userInfo',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1'
+                		},
+                		success:function(res){
+                			console.log(res.balance);
+                			console.log(res.tel);
+                			if(res.status==200){
+                				$('.myaccount').html("账户："+res.tel);
+                				$('.zhnum').html(res.balance);
+                				console.log('成功');
+                			}else{
+                				console.log('系统异常');
+                			}
+
+                		}
+					});
+
+			</script>
+
+	</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>提现</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+		<!-- 提现 -->
+		<div class="zijin">		
+			<span class="zijint">请输入提现资金，不超过可用资金</span>
+			<input class="zijininp" type="text" name="" value="" placeholder="请输入提现金额">
+			<span class="redtips redfont">
+				1.T+1日18:00前到账，有疑问请联系我们				
+			</span>
+			<span class="redtips redfont">2.提现费用千分之三</span>
+		</div>
+		
+		<input type="button" class="bluebtn" value="确认提现" onclick="tixian()" />
+
+<script type="text/javascript">
+
+			function tixian(){
+				var ojine = $('.zijininp').val();
+				console.log(ojine);
+					$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/my/withdrawals',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '1',
+                			'withdrawalsAmount': ojine
+                		},
+                		success:function(res){
+                			if(res.status==200){
+                				console.log('成功');
+                			}else{
+                				console.log('系统异常');
+                			}
+
+                		}
+					});
+					}
+			</script>
+
+	</body>
+</html>

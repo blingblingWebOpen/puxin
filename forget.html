@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">		
+		<title>更改密码</title>
+		<link rel="stylesheet" href="css/lqbase.css" />
+		<link rel="stylesheet" href="css/lqpublic.css" />
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<!-- <script scr="js/common.js"></script> -->
+	</head>
+	<body class="paddbottom backgry">
+	<form name="registerform" action="" onsubmit="register()" method="get">
+		<div class="register">
+				<div class="userdiv">
+					<p class="userp3"><label>原密码</label><input id="mima" type="text" name="" placeholder="请输入账号"> </p>
+					<p class="userp3"><label>新密码</label><input id="newmima" type="password" name="" placeholder="请输入账号"> </p>
+					<p class="userp3"><label>确认密码</label><input id="suremima" type="password" name="" placeholder="请输入账号"> </p>
+				</div>
+
+			</div>
+			<input type="submit" name="" class="bluebtn" value="完成" />
+	</form>		
+<script type="text/javascript">
+				// 提交表单
+				function register(){
+					var omima = $('#mima').val();
+					var onewmima = $('#newmima').val();
+					var osuremima = $('#suremima').val();
+					
+					// 验证为空
+					if (omima.length!=0 && onewmima.length!=0 && osuremima.length!=0 && onewmima==osuremima) {
+						$.ajax({
+						type:'get',
+						async:false,
+						url : 'https://xiaochengxu.itenez.com/pxjfoption/front/login/updatePassword',
+						 dataType : "jsonp",//数据类型为jsonps
+                		jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数,
+                		data:{
+                			'id': '3',                			
+                			'oldpassword':omima,
+                			'newpassword':onewmima,
+                		},
+                		success:function(res){
+                			if(res.status==200){
+                				console.log('提交成功 ');
+                			}else if (res.status==203){
+                				console.log('原密码错误');
+                			}else if(res.status==202){
+                				console.log('用户不存在');
+                			}else if(res.status==201){
+                				console.log('系统异常');
+                			}
+
+                		}
+					});
+					}else{
+						if(omima.length==0){
+						alert('请输入原密码');
+						return
+						}
+						if(onewmima.length==0){
+							alert("请输入新密码");
+							return
+						}
+						if(osuremima.length==0){
+							alert("请再次输入密码");
+							return
+						}
+						if(onewmima!=osuremima){
+							alert('两次密码不一致');
+							return
+						}	
+					}
+
+				}
+			</script>
+ 
+	</body>
+</html>
